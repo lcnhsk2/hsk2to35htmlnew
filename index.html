@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="google" content="notranslate">
+    <title>Test HSK Level 2 - lcnpalembang-08994477998</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.8em; margin-bottom: 8px; }
+        .header p { font-size: 1em; opacity: 0.95; }
+        
+        .timer-bar {
+            background: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 3px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .timer-item {
+            text-align: center;
+            min-width: 120px;
+        }
+        .timer-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+        }
+        .timer-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .timer-warning {
+            color: #dc3545 !important;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .tab-nav {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e9ecef;
+            position: sticky;
+            top: 55px;
+            z-index: 99;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px 10px;
+            border: none;
+            background: #f8f9fa;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-btn:hover { background: #e9ecef; }
+        .tab-btn.active {
+            background: white;
+            border-bottom-color: #667eea;
+            color: #667eea;
+        }
+        .tab-btn.listening { color: #667eea; }
+        .tab-btn.reading { color: #28a745; }
+        .tab-btn.reading.active { border-bottom-color: #28a745; color: #28a745; }
+        
+        .tab-content { display: none; padding: 15px; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        
+        .instruction-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        .reading .instruction-box {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        .instruction-box h3 { margin-bottom: 8px; font-size: 1.1em; }
+        .instruction-box p { margin: 5px 0; line-height: 1.5; }
+        
+        .section-divider {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 15px 0 0 0;
+        }
+        .reading .section-divider {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .questions-area { padding: 15px; }
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        .question-card:hover { border-color: #667eea; }
+        .reading .question-card:hover { border-color: #28a745; }
+        .question-card.answered-correct { border-color: #28a745; background: #d4edda; }
+        .question-card.answered-incorrect { border-color: #dc3545; background: #f8d7da; }
+        
+        .question-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .reading .question-number {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        
+        .part-header { text-align: center; padding: 15px; background: #f8f9fa; }
+        .part-image-container {
+            text-align: center; margin: 15px auto; padding: 15px;
+            background: white; border-radius: 12px; max-width: 900px;
+        }
+        .part-image-container img {
+            width: 100%; max-height: 400px; object-fit: contain;
+            border-radius: 8px; pointer-events: none;
+        }
+        .part-questions-column { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
+        
+        .question-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+        .question-number-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.1em; flex-shrink: 0;
+        }
+        .reading .question-number-badge {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .audio-section { text-align: center; margin: 15px 0; }
+        .play-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .play-btn:hover:not(:disabled) { transform: translateY(-2px); }
+        .play-btn.playing { animation: pulse 1s infinite; }
+        .play-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .play-count {
+            font-size: 0.85em;
+            color: #6c757d;
+            margin-top: 8px;
+        }
+        
+        .answer-title { font-size: 1.1em; font-weight: 600; color: #333; margin: 15px 0 10px 0; text-align: center; }
+        
+        .radio-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #dee2e6;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        .radio-label:hover { border-color: #667eea; background: #f0f4ff; }
+        .reading .radio-label:hover { border-color: #28a745; background: #d4edda; }
+        .radio-label input[type="radio"] { width: 18px; height: 18px; cursor: pointer; }
+        .radio-label input[type="radio"]:disabled { cursor: not-allowed; }
+        .radio-label.true { border-color: #28a745; }
+        .radio-label.true:hover { background: #d4edda; }
+        .radio-label.false { border-color: #dc3545; }
+        .radio-label.false:hover { background: #f8d7da; }
+        
+        .compact-checkboxes {
+            display: flex; justify-content: center; gap: 10px;
+            flex-wrap: wrap; margin-top: 10px; padding: 10px;
+            background: #f8f9fa; border-radius: 8px;
+        }
+        .compact-checkbox {
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 15px; background: white;
+            border: 2px solid #dee2e6; border-radius: 6px;
+            cursor: pointer; transition: all 0.3s;
+            font-size: 0.95em; font-weight: 500;
+        }
+        .compact-checkbox:hover { border-color: #667eea; background: #f0f4ff; }
+        .reading .compact-checkbox:hover { border-color: #28a745; background: #d4edda; }
+        .compact-checkbox input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+        .compact-checkbox input[type="checkbox"]:disabled { cursor: not-allowed; }
+        .compact-checkbox.selected { border-color: #28a745; background: #d4edda; color: #155724; }
+        
+        .submit-all-section {
+            text-align: center; padding: 30px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-top: 3px solid #dee2e6;
+        }
+        .submit-all-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white; border: none; padding: 15px 50px;
+            border-radius: 40px; cursor: pointer; font-size: 1.3em;
+            font-weight: bold; transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .submit-all-btn:hover:not(:disabled) { transform: translateY(-2px); }
+        .submit-all-btn:disabled { background: #6c757d; cursor: not-allowed; opacity: 0.6; }
+        
+        .feedback {
+            margin-top: 12px; padding: 12px; border-radius: 10px;
+            display: none; font-size: 0.95em; animation: slideIn 0.3s;
+        }
+        @keyframes slideIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+        .feedback.correct { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; display: block; }
+        .feedback.incorrect { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; display: block; }
+        
+        .result-report {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 40px 20px; text-align: center;
+            margin: 20px; border-radius: 15px; display: none;
+        }
+        .reading .result-report {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        .result-report.show { display: block; animation: fadeIn 0.5s; }
+        .result-report-icon { font-size: 4em; margin-bottom: 15px; }
+        .result-report-title { font-size: 2em; margin-bottom: 20px; font-weight: bold; }
+        .result-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .stat-item { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 12px; }
+        .stat-value { font-size: 2.5em; font-weight: bold; margin-bottom: 8px; }
+        .stat-label { font-size: 1em; opacity: 0.95; }
+        .result-message { font-size: 1.3em; margin: 20px 0; font-style: italic; }
+        .pass-status {
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .pass-status.pass { background: #28a745; }
+        .pass-status.fail { background: #dc3545; }
+        .restart-btn {
+            background: white; color: #667eea; border: none;
+            padding: 15px 40px; font-size: 1.2em; border-radius: 40px;
+            cursor: pointer; transition: all 0.3s; font-weight: bold; margin-top: 15px;
+        }
+        .restart-btn:hover { transform: translateY(-2px); }
+        
+        .progress-indicator {
+            text-align: center; padding: 12px;
+            background: #e7f3ff; color: #667eea;
+            font-weight: 600; margin: 15px 0; border-radius: 8px;
+            font-size: 0.95em;
+        }
+        .reading .progress-indicator {
+            background: #d4edda; color: #155724;
+        }
+        
+        .sentence-text {
+            font-size: 1.3em;
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .blank-space {
+            display: inline-block;
+            width: 60px;
+            border-bottom: 2px solid #667eea;
+            margin: 0 4px;
+        }
+        .reading .blank-space {
+            border-bottom-color: #28a745;
+        }
+        
+        .options-box {
+            background: white;
+            border: 3px solid #28a745;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .options-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .options-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .option-item {
+            padding: 10px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        .option-letter {
+            font-weight: bold;
+            color: #28a745;
+            margin-right: 8px;
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.5);
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        @media (max-width:768px) {
+            .header h1 { font-size: 1.5em; }
+            .tab-btn { font-size: 1em; padding: 12px 8px; }
+            .timer-value { font-size: 1.5em; }
+            .question-card { padding: 15px; }
+            .radio-group { flex-direction: column; gap: 10px; }
+            .compact-checkboxes { gap: 6px; }
+            .compact-checkbox { padding: 6px 12px; font-size: 0.9em; }
+            .submit-all-btn { padding: 12px 30px; font-size: 1.1em; }
+            .result-stats { grid-template-columns: 1fr; }
+            .stat-value { font-size: 2em; }
+        }
+        
+        @media print {
+            .tab-nav, .timer-bar, .submit-all-section, .play-btn { display: none !important; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div class="header">
+            <h1>📚 Test HSK Level 2 - H21335 (lcnpalembang-08994477998)</h1>
+            <p>Listening (35 soal) & Reading (25 soal) - Total 60 soal</p>
+        </div>
+        
+        <!-- Timer Bar -->
+        <div class="timer-bar">
+            <div class="timer-item">
+                <div class="timer-value" id="totalTimer">47:00</div>
+                <div class="timer-label">⏱️ Total Waktu</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-value" id="listeningTimer">22:00</div>
+                <div class="timer-label">🎧 Listening</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-value" id="readingTimer">25:00</div>
+                <div class="timer-label">📖 Reading</div>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn listening active" onclick="switchTab('listening')">🎧 Listening</button>
+            <button class="tab-btn reading" onclick="switchTab('reading')">📖 Reading</button>
+        </div>
+        
+        <!-- LISTENING TAB -->
+        <div id="listening-tab" class="tab-content active">
+            <div class="instruction-box">
+                <h3>📝 Petunjuk Listening:</h3>
+                <p>1. Setiap audio hanya bisa diputar <strong>2 kali</strong></p>
+                <p>2. Setelah 2 kali putar, audio tidak bisa diputar lagi</p>
+                <p>3. Waktu maksimal: <strong>22 menit</strong></p>
+                <p>4. Total soal: <strong>35 soal</strong></p>
+            </div>
+            
+            <div class="progress-indicator" id="listeningProgress">📝 Silakan jawab semua soal listening</div>
+            
+            <!-- Listening Part 1: 1-10 -->
+            <div>
+                <div class="section-divider">🎧 BAGIAN 1 - Soal 1-10</div>
+                <div class="questions-area" id="listening-part1"></div>
+            </div>
+            
+            <!-- Listening Part 2: 11-15 -->
+            <div>
+                <div class="section-divider">🎯 BAGIAN 2 - Soal 11-15</div>
+                <div class="part-header">
+                    <div class="part-image-container">
+                        <img src="images/bagian2.jpg" alt="Listening Part 2" onerror="this.style.display='none'">
+                    </div>
+                </div>
+                <div class="questions-area"><div class="part-questions-column" id="listening-part2"></div></div>
+            </div>
+            
+            <!-- Listening Part 3: 16-20 -->
+            <div>
+                <div class="section-divider">📚 BAGIAN 3 - Soal 16-20</div>
+                <div class="part-header">
+                    <div class="part-image-container">
+                        <img src="images/bagian3.jpg" alt="Listening Part 3" onerror="this.style.display='none'">
+                    </div>
+                </div>
+                <div class="questions-area"><div class="part-questions-column" id="listening-part3"></div></div>
+            </div>
+            
+            <!-- Listening Part 4: 21-35 -->
+            <div>
+                <div class="section-divider">📖 BAGIAN 4 - Soal 21-35</div>
+                <div class="questions-area"><div class="part-questions-column" id="listening-part4"></div></div>
+            </div>
+            
+            <div class="submit-all-section">
+                <button class="submit-all-btn" onclick="submitListening()" id="listeningSubmitBtn" disabled>
+                    <span>📤</span><span>Selesai Listening</span>
+                </button>
+            </div>
+            
+            <div class="result-report" id="listeningResult"></div>
+        </div>
+        
+        <!-- READING TAB -->
+        <div id="reading-tab" class="tab-content reading">
+            <div class="instruction-box">
+                <h3>📝 Petunjuk Reading:</h3>
+                <p>1. Waktu maksimal: <strong>25 menit</strong></p>
+                <p>2. Total soal: <strong>25 soal</strong></p>
+                <p>3. Nilai kelulusan minimal: <strong>90%</strong></p>
+            </div>
+            
+            <div class="progress-indicator" id="readingProgress">📝 Silakan jawab semua soal reading</div>
+            
+            <!-- Reading Part 1: 36-40 -->
+            <div>
+                <div class="section-divider">📖 BAGIAN 1 - Soal 36-40</div>
+                <div class="part-header">
+                    <div class="part-image-container">
+                        <img src="images/reading2.jpg" alt="Reading Part 1" onerror="this.style.display='none'">
+                    </div>
+                </div>
+                <div class="questions-area"><div class="part-questions-column" id="reading-part1"></div></div>
+            </div>
+            
+            <!-- Reading Part 2: 41-45 -->
+            <div>
+                <div class="section-divider">📝 BAGIAN 2 - Soal 41-45</div>
+                <div class="questions-area" id="reading-part2"></div>
+            </div>
+            
+            <!-- Reading Part 3: 46-50 -->
+            <div>
+                <div class="section-divider">✅ BAGIAN 3 - Soal 46-50</div>
+                <div class="questions-area" id="reading-part3"></div>
+            </div>
+            
+            <!-- Reading Part 4A: 51-55 -->
+            <div>
+                <div class="section-divider">💬 BAGIAN 4A - Soal 51-55</div>
+                <div class="questions-area" id="reading-part4a"></div>
+            </div>
+            
+            <!-- Reading Part 4B: 56-60 -->
+            <div>
+                <div class="section-divider">💬 BAGIAN 4B - Soal 56-60</div>
+                <div class="questions-area" id="reading-part4b"></div>
+            </div>
+            
+            <div class="submit-all-section">
+                <button class="submit-all-btn" onclick="submitReading()" id="readingSubmitBtn" disabled>
+                    <span>📤</span><span>Selesai Reading</span>
+                </button>
+            </div>
+            
+            <div class="result-report" id="readingResult"></div>
+        </div>
+    </div>
+    
+    <div class="watermark">HSK Level 2 - H21335</div>
+
+    <script>
+        // ==================== SECURITY FEATURES ====================
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable copy-paste
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'p' || e.key === 's') {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        // Disable Google Translate
+        document.documentElement.setAttribute('translate', 'no');
+        document.documentElement.setAttribute('lang', 'id');
+        
+        // ==================== TIMER SYSTEM ====================
+        let totalSeconds = 47 * 60; // 47 minutes
+        let listeningSeconds = 22 * 60; // 22 minutes
+        let readingSeconds = 25 * 60; // 25 minutes
+        let timerInterval;
+        let listeningActive = true;
+        let listeningFinished = false;
+        let readingFinished = false;
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    updateTimerDisplay();
+                    
+                    if (listeningActive && !listeningFinished) {
+                        listeningSeconds--;
+                        if (listeningSeconds <= 0) {
+                            listeningFinished = true;
+                            listeningActive = false;
+                            alert('⏰ Waktu Listening habis! Silakan lanjut ke Reading.');
+                            submitListening();
+                            switchTab('reading');
+                        }
+                    }
+                    
+                    if (!listeningActive && !readingFinished) {
+                        readingSeconds--;
+                        if (readingSeconds <= 0) {
+                            readingFinished = true;
+                            alert('⏰ Waktu Reading habis! Test selesai.');
+                            submitReading();
+                        }
+                    }
+                    
+                    // Warning at 5 minutes remaining
+                    if (totalSeconds <= 300 && totalSeconds > 0 && totalSeconds % 60 === 0) {
+                        showTimerWarning();
+                    }
+                } else {
+                    clearInterval(timerInterval);
+                    alert('⏰ Waktu habis! Test selesai.');
+                    submitListening();
+                    submitReading();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('totalTimer').textContent = formatTime(totalSeconds);
+            document.getElementById('listeningTimer').textContent = formatTime(listeningSeconds);
+            document.getElementById('readingTimer').textContent = formatTime(readingSeconds);
+            
+            // Add warning class
+            if (listeningSeconds <= 300 && !listeningFinished) {
+                document.getElementById('listeningTimer').classList.add('timer-warning');
+            }
+            if (readingSeconds <= 300 && !readingFinished) {
+                document.getElementById('readingTimer').classList.add('timer-warning');
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        function showTimerWarning() {
+            const mins = Math.floor(totalSeconds / 60);
+            if (mins <= 5) {
+                alert('⚠️ Peringatan: Waktu tersisa ' + mins + ' menit!');
+            }
+        }
+
+        // ==================== TAB SWITCHING ====================
+        function switchTab(tabName) {
+            if (listeningFinished && tabName === 'listening') {
+                alert('Listening sudah selesai. Silakan lanjut ke Reading.');
+                return;
+            }
+            
+            document.querySelectorAll('.tab-content').forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabName + '-tab').classList.add('active');
+            document.querySelector('.tab-btn.' + tabName).classList.add('active');
+            
+            if (tabName === 'reading') {
+                listeningActive = false;
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== LISTENING DATA ====================
+// ==================== LISTENING DATA ====================
+const listeningPart1 = [
+    {id:1,audio:"别说话，电影要开始了。",correct:"true",image:"images/gambar1.png"},
+    {id:2,audio:"下个月爸爸生日，我想送他块儿手表。",correct:"false",image:"images/gambar2.jpg"},
+    {id:3,audio:"外面冷，多穿件衣服。",correct:"false",image:"images/gambar3.jpg"},
+    {id:4,audio:"我看看你买了什么。",correct:"true",image:"images/gambar4.jpg"},
+    {id:5,audio:"这个字怎么读？",correct:"false",image:"images/gambar5.jpg"},
+    {id:6,audio:"西瓜是我最爱吃的水果。",correct:"true",image:"images/gambar6.jpg"},
+    {id:7,audio:"对不起，那本书卖完了。",correct:"true",image:"images/gambar7.jpg"},
+    {id:8,audio:"你好，我姓张，你可以叫我小张。",correct:"true",image:"images/gambar8.jpg"},
+    {id:9,audio:"我要红茶，你呢？",correct:"false",image:"images/gambar9.jpg"},
+    {id:10,audio:"他们在一起时很快乐。",correct:"false",image:"images/gambar10.jpg"}
+];
+
+        const listeningPart2 = [
+            {id:11,audio:"女：这儿有椅子，您坐吧。男：没关系，我不累。",correct:"B"},
+            {id:12,audio:"男：可以请你跳个舞吗？女：好的。",correct:"E"},
+            {id:13,audio:"女：我看到这儿了，你呢？男：这么快？我还没开始呢。",correct:"F"},
+            {id:14,audio:"男：几点了？女：还不到九点呢，我们早来了一个小时。",correct:"A"},
+            {id:15,audio:"女：东西都准备好了？去几天？男：正准备着呢，一个星期就回来。",correct:"C"},
+            {id:16,audio:"男：看到了吗？我们要到那上面去。女：看到了，真高。",correct:"A"},
+            {id:17,audio:"女：明天上午学校见。男：好，路上慢点儿，再见。",correct:"C"},
+            {id:18,audio:"男：您做的面条儿真好吃。女：是吗？那你多吃点儿，不要客气。",correct:"D"},
+            {id:19,audio:"女：还有铅笔吗？男：有，在电脑旁边。",correct:"B"},
+            {id:20,audio:"男：现在怎么样？女：再往左边点儿。",correct:"E"}
+        ];
+
+        const listeningPart3 = [
+            {id:21,audio:"女：小高，你女儿真漂亮，几岁了？男：五岁。问：小高的女儿多大了？",correct:"A",options:["A 5 岁","B 9 岁","C 15 岁"]},
+            {id:22,audio:"男：阴天了，不知道会不会下雨。女：希望别下，我还要去游泳呢。问：现在天气怎么样？",correct:"A",options:["A 阴天","B 下雪了","C 非常热"]},
+            {id:23,audio:"女：喂，我还在出租车上，你再等我几分钟吧。男：好，我在大门这儿，穿着黑色衣服，你下车就能看到我。问：女的怎么去那儿？",correct:"C",options:["A 走路","B 开车","C 坐出租车"]},
+            {id:24,audio:"男：听说今年有八百多人考进我们学校。女：这么多？比我们那年多了三百多。问：今年考进了多少人？",correct:"B",options:["A 500 多","B 800 多","C 1000 多"]},
+            {id:25,audio:"女：你妹妹下火车了吗？男：下了，已经到宾馆了。问：妹妹现在在哪儿？",correct:"A",options:["A 宾馆","B 机场","C 火车站"]},
+            {id:26,audio:"男：什么事情这么好笑？女：这个电影太有意思了，你也来看看。问：女的在做什么？",correct:"C",options:["A 吃苹果","B 看报纸","C 看电影"]},
+            {id:27,audio:"女：咖啡给王先生送去了吗？男：还没呢，我这几天太忙，星期日再送吧。问：男的要给谁送咖啡？",correct:"B",options:["A 钱医生","B 王先生","C 王小姐"]},
+            {id:28,audio:"男：儿子呢？没在房间里？女：他去运动了，还没回来。问：儿子做什么去了？",correct:"A",options:["A 运动","B 上班","C 买水"]},
+            {id:29,audio:"女：怎么样，医生？男：没什么大问题，我给你开点儿药，回去好好休息。问：他们现在在哪儿？",correct:"C",options:["A 饭店","B 教室","C 医院"]},
+            {id:30,audio:"男：你也认识小李？女：是，我们从小就认识，到现在都二十多年了。问：他们在说谁？",correct:"B",options:["A 小白","B 小李","C 小谢"]},
+            {id:31,audio:"男：公司前面新开了一家饭店，你去过吗？女：去过，我觉得菜有点儿贵。男：虽然贵，但菜做得很好吃。女：是，菜是做得不错。问：那家饭店在哪儿？",correct:"B",options:["A 学校里面","B 公司前面","C 商店后面"]},
+            {id:32,audio:"女：中午和你一起打篮球的那个人是谁？男：你说的是哪个？女：穿七号球衣的那个。男：是小白，我大学同学，哪天给你介绍一下。问：男的中午和谁打球了？",correct:"B",options:["A 他哥哥","B 他同学","C 他的学生"]},
+            {id:33,audio:"男：这是你的狗？女：是，昨天姐姐送我的。男：真好玩儿。它叫什么名字？女：我叫它高兴。问：姐姐送了什么给女的？",correct:"C",options:["A 鱼","B 猫","C 狗"]},
+            {id:34,audio:"女：今晚有时间吗？男：有，怎么了？女：我的电脑出问题了，你帮我看看吧。男：好，那六点在你家见吧。问：他们几点见？",correct:"C",options:["A 16:00","B 17:00","C 18:00"]},
+            {id:35,audio:"男：你什么时候买的车？女：上个月。男：那你现在开车上班？女：对，因为我现在住得远，开车能快点儿。问：女的为什么开车去上班？",correct:"A",options:["A 住得远","B 起床晚了","C 不想等车"]}
+        ];
+
+        const listeningPart4 = listeningPart3.slice(10); // Soal 31-35
+
+        // Audio play count tracking
+        const audioPlayCounts = {};
+
+        // ==================== READING DATA ====================
+        const readingPart1 = [
+            {id:36,sentence:"我觉得这件就很不错。",correct:"F",options:["A","B","C","D","E","F"]},
+            {id:37,sentence:"米饭做好了，快来吃饭吧。",correct:"A",options:["A","B","C","D","E","F"]},
+            {id:38,sentence:"它能听懂你说的话吗？",correct:"E",options:["A","B","C","D","E","F"]},
+            {id:39,sentence:"喂，我已经下飞机了，现在正往家里走呢。",correct:"B",options:["A","B","C","D","E","F"]},
+            {id:40,sentence:"来，喝杯咖啡，休息一下。",correct:"C",options:["A","B","C","D","E","F"]}
+        ];
+
+        const readingPart2 = [
+            {id:41,sentence:"对不起，让你等了这么<span class='blank-space'></span>。",correct:"C",options:["A 再","B 忙","C 时间","D 离","E 贵","F 唱歌"]},
+            {id:42,sentence:"别<span class='blank-space'></span>电视太近，对眼睛不好，坐远点儿。",correct:"D",options:["A 再","B 忙","C 时间","D 离","E 贵","F 唱歌"]},
+            {id:43,sentence:"这个手机还能<span class='blank-space'></span>便宜些吗？",correct:"A",options:["A 再","B 忙","C 时间","D 离","E 贵","F 唱歌"]},
+            {id:44,sentence:"没想到你妻子<span class='blank-space'></span>这么好听。",correct:"F",options:["A 再","B 忙","C 时间","D 离","E 贵","F 唱歌"]},
+            {id:45,sentence:"女：你每天几点睡觉？男：10 点，有时候工作<span class='blank-space'></span>，可能会晚一点儿。",correct:"B",options:["A 再","B 忙","C 时间","D 离","E 贵","F 唱歌"]}
+        ];
+
+        const readingPart3 = [
+            {id:46,sentence:"姐姐，第一题我不会做，你做完饭能帮我看看吗？★ 姐姐正在房间里学习。",correct:"false"},
+            {id:47,sentence:"我认识你丈夫，去年在中国旅游的时候，我们见过一次。★ 他去过中国。",correct:"true"},
+            {id:48,sentence:"今晚的雪下得真大，不知道明天早上还能不能去跑步。★ 外面下雨了。",correct:"false"},
+            {id:49,sentence:"刘小姐生病了，所以今天没来公司。您有什么事情可以和我说，等她来了，我再告诉她。★ 刘小姐今天身体不太好。",correct:"true"},
+            {id:50,sentence:"知道你今天要回家，妈妈做了很多菜，有你最爱吃的鱼。快去洗洗手来吃饭吧。★ 他今天不在家吃饭。",correct:"false"}
+        ];
+
+        const readingPart4A_Options = [
+            {letter:"A",text:"床上那件衣服是要洗的吗？"},
+            {letter:"B",text:"明天天气很好，我们出去玩儿吧？"},
+            {letter:"C",text:"名字都在这上面吗？怎么没看到我的？"},
+            {letter:"D",text:"我已经在回去的路上了。"},
+            {letter:"E",text:"他在哪儿呢？你看见他了吗？"},
+            {letter:"F",text:"吃完鸡蛋就走吧，都 9 点了，火车快要开了。"}
+        ];
+
+        const readingPart4A = [
+            {id:51,sentence:"我们再要杯牛奶？",correct:"F"},
+            {id:52,sentence:"我也不知道，这是小王写的，你问他吧。",correct:"C"},
+            {id:53,sentence:"我下午有课，后天怎么样？",correct:"B"},
+            {id:54,sentence:"不是，我下午踢球还要穿呢。",correct:"A"},
+            {id:55,sentence:"我下班了，你呢？",correct:"D"}
+        ];
+
+        const readingPart4B_Options = [
+            {letter:"A",text:"408 教室，到时候我们一块儿去。"},
+            {letter:"B",text:"大家都非常喜欢她。"},
+            {letter:"C",text:"好的，这就给您送来。"},
+            {letter:"D",text:"你慢点儿开，让我好好看看。"},
+            {letter:"E",text:"一个朋友，让我帮他买去北京的票。"}
+        ];
+
+        const readingPart4B = [
+            {id:56,sentence:"谁打来的电话？",correct:"E"},
+            {id:57,sentence:"我觉得我们走错了，不是往右。",correct:"D"},
+            {id:58,sentence:"下午的汉语考试在哪儿考？",correct:"A"},
+            {id:59,sentence:"小晴是个爱笑、爱帮助人的孩子。",correct:"B"},
+            {id:60,sentence:"服务员，我们这桌少两个椅子。",correct:"C"}
+        ];
+
+        let listeningSubmitted = false;
+        let readingSubmitted = false;
+
+        // ==================== LISTENING FUNCTIONS ====================
+        function initializeListening() {
+            try {
+                generateListeningPart1();
+                generateListeningPart2();
+                generateListeningPart3();
+                generateListeningPart4();
+                updateListeningProgress();
+            } catch (error) {
+                console.error('Error initializing listening:', error);
+            }
+        }
+
+        function generateListeningPart1() {
+ 
+    const container = document.getElementById('listening-part1');
+    if (!container) return;
+    
+    let html = '';
+    listeningPart1.forEach(function(q) {
+        html += '<div class="question-card" id="listen-card' + q.id + '">' +
+            '<div class="question-number">' + q.id + '</div>' +
+            '<div class="image-container">' +
+            '<img src="' + q.image + '" alt="Soal ' + q.id + '" onerror="this.src=\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27250%27%3E%3Crect fill=%27%23e7f3ff%27 width=%27400%27 height=%27250%27/%3E%3Ctext fill=%27%23667eea%27 x=%2750%25%27 y=%2750%25%27 text-anchor=%27middle%27 dy=%27.3em%27 font-size=%2720%27%3EGambar ' + q.id + '%3C/text%3E%3C/svg%3E\'">' +
+            '</div>' +
+            '<div class="audio-section">' +
+            '<button class="play-btn" onclick="playListeningAudio(' + q.id + ',this)" id="play-btn-' + q.id + '"><span>🔊</span><span>Putar Audio</span></button>' +
+            '<div class="play-count" id="play-count-' + q.id + '">Putaran: 0/2</div>' +
+            '</div>' +
+            '<div class="answer-title">Apakah pernyataan sesuai dengan gambar?</div>' +
+            '<div class="radio-group">' +
+            '<label class="radio-label true"><input type="radio" name="listen-q' + q.id + '" value="true" onchange="updateListeningProgress()"><span>✅ True (Benar)</span></label>' +
+            '<label class="radio-label false"><input type="radio" name="listen-q' + q.id + '" value="false" onchange="updateListeningProgress()"><span>❌ False (Salah)</span></label>' +
+            '</div>' +
+            '<div class="feedback" id="listen-fb' + q.id + '"></div>' +
+            '</div>';
+    });
+    container.innerHTML = html;
+}
+        function generateListeningPart2() {
+            const container = document.getElementById('listening-part2');
+            if (!container) return;
+            
+            let html = '';
+            listeningPart2.forEach(function(q) {
+                html += createListeningCard(q, ['A','B','C','D','E','F']);
+            });
+            container.innerHTML = html;
+        }
+
+        function generateListeningPart3() {
+            const container = document.getElementById('listening-part3');
+            if (!container) return;
+            
+            let html = '';
+            listeningPart2.slice(5).forEach(function(q) {
+                html += createListeningCard(q, ['A','B','C','D','E']);
+            });
+            container.innerHTML = html;
+        }
+
+        function generateListeningPart4() {
+            const container = document.getElementById('listening-part4');
+            if (!container) return;
+            
+            let html = '';
+            listeningPart3.slice(10).forEach(function(q) {
+                html += createListeningCard4(q);
+            });
+            container.innerHTML = html;
+        }
+
+        function createListeningCard(q, options) {
+            let checkboxes = '';
+            options.forEach(function(opt) {
+                checkboxes += '<label class="compact-checkbox" onclick="toggleListeningCheckbox(this,' + q.id + ')"><input type="checkbox" name="listen-q' + q.id + '" value="' + opt + '"><span>' + opt + '</span></label>';
+            });
+            return '<div class="part-question-card" id="listen-card' + q.id + '">' +
+                '<div class="question-header">' +
+                '<div class="question-number-badge">' + q.id + '</div>' +
+                '<div class="audio-indicator">🔊 Audio ' + q.id + '</div>' +
+                '</div>' +
+                '<div class="audio-section">' +
+                '<button class="play-btn" onclick="playListeningAudio(' + q.id + ',this)" id="play-btn-' + q.id + '"><span>▶️</span><span>Putar Audio</span></button>' +
+                '<div class="play-count" id="play-count-' + q.id + '">Putaran: 0/2</div>' +
+                '</div>' +
+                '<div class="answer-title">Pilih jawaban yang sesuai:</div>' +
+                '<div class="compact-checkboxes">' + checkboxes + '</div>' +
+                '<div class="feedback" id="listen-fb' + q.id + '"></div>' +
+                '</div>';
+        }
+
+        function createListeningCard4(q) {
+            let checkboxes = '';
+            q.options.forEach(function(opt, idx) {
+                const letter = ['A','B','C'][idx];
+                checkboxes += '<label class="compact-checkbox" onclick="toggleListeningCheckbox(this,' + q.id + ')"><input type="checkbox" name="listen-q' + q.id + '" value="' + letter + '"><span>' + letter + ' - ' + opt + '</span></label>';
+            });
+            return '<div class="part-question-card" id="listen-card' + q.id + '" style="background:#fff;border-left:4px solid #667eea">' +
+                '<div class="question-header">' +
+                '<div class="question-number-badge">' + q.id + '</div>' +
+                '<div class="audio-indicator">🔊 Audio ' + q.id + '</div>' +
+                '</div>' +
+                '<div class="audio-section">' +
+                '<button class="play-btn" onclick="playListeningAudio(' + q.id + ',this)" id="play-btn-' + q.id + '"><span>▶️</span><span>Putar Audio</span></button>' +
+                '<div class="play-count" id="play-count-' + q.id + '">Putaran: 0/2</div>' +
+                '</div>' +
+                '<div class="answer-title">Pilih jawaban yang sesuai:</div>' +
+                '<div class="compact-checkboxes">' + checkboxes + '</div>' +
+                '<div class="feedback" id="listen-fb' + q.id + '"></div>' +
+                '</div>';
+        }
+
+        function playListeningAudio(qNum, btn) {
+            if (listeningSubmitted) { 
+                alert('Test sudah selesai.'); 
+                return; 
+            }
+            
+            // Initialize play count if not exists
+            if (!audioPlayCounts[qNum]) {
+                audioPlayCounts[qNum] = 0;
+            }
+            
+            // Check if already played 2 times
+            if (audioPlayCounts[qNum] >= 2) {
+                alert('⚠️ Audio sudah diputar 2 kali. Tidak bisa diputar lagi.');
+                btn.disabled = true;
+                btn.innerHTML = '<span>🔒</span><span>Audio Selesai</span>';
+                return;
+            }
+            
+            // Increment play count
+            audioPlayCounts[qNum]++;
+            document.getElementById('play-count-' + qNum).textContent = 'Putaran: ' + audioPlayCounts[qNum] + '/2';
+            
+            // Find question
+            let q;
+            if (qNum <= 10) q = listeningPart1.find(function(x) { return x.id === qNum; });
+            else if (qNum <= 20) q = listeningPart2.find(function(x) { return x.id === qNum; });
+            else q = listeningPart3.find(function(x) { return x.id === qNum; });
+            
+            if (!q) return;
+            
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(q.audio);
+                u.lang = 'zh-CN'; 
+                u.rate = 0.75;
+                btn.classList.add('playing');
+                btn.innerHTML = '<span>▶️</span><span>Memutar...</span>';
+                btn.disabled = true;
+                
+                u.onend = function() {
+                    btn.classList.remove('playing');
+                    if (audioPlayCounts[qNum] >= 2) {
+                        btn.innerHTML = '<span>🔒</span><span>Audio Selesai</span>';
+                        btn.disabled = true;
+                    } else {
+                        btn.innerHTML = '<span>▶️</span><span>Putar Audio</span>';
+                        btn.disabled = false;
+                    }
+                };
+                
+                speechSynthesis.speak(u);
+            } else {
+                alert('Gunakan Chrome untuk audio.');
+            }
+        }
+
+        function toggleListeningCheckbox(label, qNum) {
+            if (listeningSubmitted) return;
+            document.querySelectorAll('input[name="listen-q' + qNum + '"]').forEach(function(cb) {
+                cb.checked = false;
+                cb.parentElement.classList.remove('selected');
+            });
+            label.querySelector('input').checked = true;
+            label.classList.add('selected');
+            updateListeningProgress();
+        }
+
+        function updateListeningProgress() {
+            let answered = 0;
+            for (let i = 1; i <= 35; i++) {
+                if (document.querySelector('input[name="listen-q' + i + '"]:checked')) answered++;
+            }
+            document.getElementById('listeningAnswered').textContent = answered;
+            const ind = document.getElementById('listeningProgress');
+            if (answered === 35) {
+                ind.innerHTML = '✅ Semua soal listening sudah dijawab!';
+                ind.style.background = '#d4edda';
+                ind.style.color = '#155724';
+                document.getElementById('listeningSubmitBtn').disabled = false;
+            } else {
+                ind.innerHTML = '📝 ' + answered + '/35 soal sudah dijawab.';
+                ind.style.background = '#e7f3ff';
+                ind.style.color = '#667eea';
+                document.getElementById('listeningSubmitBtn').disabled = (answered === 0);
+            }
+        }
+
+        function submitListening() {
+            if (listeningSubmitted) return;
+            
+            let unanswered = [];
+            for (let i = 1; i <= 35; i++) {
+                if (!document.querySelector('input[name="listen-q' + i + '"]:checked')) unanswered.push(i);
+            }
+            if (unanswered.length > 0) {
+                if (!confirm('⚠️ Masih ada ' + unanswered.length + ' soal belum dijawab. Yakin ingin submit?')) {
+                    return;
+                }
+            }
+            
+            listeningSubmitted = true;
+            listeningFinished = true;
+            listeningActive = false;
+            
+            let correctCount = 0;
+            const allListening = listeningPart1.concat(listeningPart2, listeningPart3);
+            
+            allListening.forEach(function(q) {
+                const selected = document.querySelector('input[name="listen-q' + q.id + '"]:checked');
+                const ans = selected ? selected.value : '';
+                const fb = document.getElementById('listen-fb' + q.id);
+                const card = document.getElementById('listen-card' + q.id);
+                const playBtn = document.getElementById('play-btn-' + q.id);
+                
+                document.querySelectorAll('input[name="listen-q' + q.id + '"]').forEach(function(input) { 
+                    input.disabled = true; 
+                });
+                
+                if (playBtn) {
+                    playBtn.disabled = true;
+                    playBtn.style.opacity = '0.5';
+                }
+                
+                if (ans === q.correct) {
+                    correctCount++;
+                    if (fb) {
+                        fb.className = 'feedback correct';
+                        fb.innerHTML = '<strong>✅ BENAR!</strong><br>Jawaban: <strong>' + ans + '</strong>';
+                    }
+                    if (card) card.classList.add('answered-correct');
+                } else {
+                    if (fb) {
+                        fb.className = 'feedback incorrect';
+                        fb.innerHTML = '<strong>❌ SALAH!</strong><br>Benar: <strong>' + q.correct + '</strong>';
+                    }
+                    if (card) card.classList.add('answered-incorrect');
+                }
+            });
+            
+            showListeningResult(correctCount);
+            
+            // Auto switch to reading after 3 seconds
+            setTimeout(function() {
+                switchTab('reading');
+            }, 3000);
+        }
+
+        function showListeningResult(correctCount) {
+            const percentage = Math.round((correctCount / 35) * 100);
+            document.getElementById('listeningSubmitBtn').style.display = 'none';
+            document.getElementById('listeningProgress').style.display = 'none';
+            
+            let msg = percentage === 100 ? 'Luar Biasa! 🌟' : percentage >= 80 ? 'Hebat! 👏' : percentage >= 60 ? 'Bagus! 💪' : 'Terus berlatih! 📚';
+            
+            document.getElementById('listeningResult').innerHTML = 
+                '<div class="result-report-icon">🎉</div>' +
+                '<div class="result-report-title">Hasil Listening</div>' +
+                '<div class="result-stats">' +
+                '<div class="stat-item"><div class="stat-value">' + correctCount + '</div><div class="stat-label">Benar</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + (35-correctCount) + '</div><div class="stat-label">Salah</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + percentage + '%</div><div class="stat-label">Nilai</div></div>' +
+                '</div>' +
+                '<div class="result-message">' + msg + '</div>';
+            document.getElementById('listeningResult').classList.add('show');
+        }
+
+        // ==================== READING FUNCTIONS ====================
+        function initializeReading() {
+            try {
+                generateReadingPart1();
+                generateReadingPart2();
+                generateReadingPart3();
+                generateReadingPart4A();
+                generateReadingPart4B();
+                updateReadingProgress();
+            } catch (error) {
+                console.error('Error initializing reading:', error);
+            }
+        }
+
+        function generateReadingPart1() {
+            const container = document.getElementById('reading-part1');
+            if (!container) return;
+            
+            let html = '';
+            readingPart1.forEach(function(q) {
+                let checkboxes = '';
+                q.options.forEach(function(opt) {
+                    checkboxes += '<label class="compact-checkbox" onclick="toggleReadingCheckbox(this,' + q.id + ')"><input type="checkbox" name="read-q' + q.id + '" value="' + opt + '"><span>' + opt + '</span></label>';
+                });
+                html += '<div class="part-question-card" id="read-card' + q.id + '">' +
+                    '<div class="question-header">' +
+                    '<div class="question-number-badge">' + q.id + '</div>' +
+                    '</div>' +
+                    '<div class="sentence-text">' + q.sentence + '</div>' +
+                    '<div class="answer-title">Pilih gambar yang sesuai (A-F):</div>' +
+                    '<div class="compact-checkboxes">' + checkboxes + '</div>' +
+                    '<div class="feedback" id="read-fb' + q.id + '"></div>' +
+                    '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function generateReadingPart2() {
+            const container = document.getElementById('reading-part2');
+            if (!container) return;
+            
+            let html = '';
+            readingPart2.forEach(function(q) {
+                let options = '';
+                q.options.forEach(function(opt, idx) {
+                    const letter = ['A','B','C','D','E','F'][idx];
+                    options += '<label class="radio-label" style="border-color:#28a745"><input type="radio" name="read-q' + q.id + '" value="' + letter + '" onchange="updateReadingProgress()"><span>' + letter + ' - ' + opt + '</span></label>';
+                });
+                html += '<div class="question-card" id="read-card' + q.id + '">' +
+                    '<div class="question-number">' + q.id + '</div>' +
+                    '<div class="sentence-text">' + q.sentence + '</div>' +
+                    '<div class="answer-title">Pilih kata yang tepat:</div>' +
+                    '<div class="radio-group">' + options + '</div>' +
+                    '<div class="feedback" id="read-fb' + q.id + '"></div>' +
+                    '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function generateReadingPart3() {
+            const container = document.getElementById('reading-part3');
+            if (!container) return;
+            
+            let html = '';
+            readingPart3.forEach(function(q) {
+                html += '<div class="question-card" id="read-card' + q.id + '">' +
+                    '<div class="question-number">' + q.id + '</div>' +
+                    '<div class="sentence-text">' + q.sentence + '</div>' +
+                    '<div class="answer-title">Pernyataan ini BENAR atau SALAH?</div>' +
+                    '<div class="radio-group">' +
+                    '<label class="radio-label true"><input type="radio" name="read-q' + q.id + '" value="true" onchange="updateReadingProgress()"><span>✅ Benar (√)</span></label>' +
+                    '<label class="radio-label false"><input type="radio" name="read-q' + q.id + '" value="false" onchange="updateReadingProgress()"><span>❌ Salah (×)</span></label>' +
+                    '</div>' +
+                    '<div class="feedback" id="read-fb' + q.id + '"></div>' +
+                    '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function generateReadingPart4A() {
+            const container = document.getElementById('reading-part4a');
+            if (!container) return;
+            
+            let optionsHtml = '<div class="options-box">' +
+                '<div class="options-title">📋 Pilihan Jawaban (A-F):</div>' +
+                '<div class="options-list">';
+            readingPart4A_Options.forEach(function(opt) {
+                optionsHtml += '<div class="option-item"><span class="option-letter">' + opt.letter + '</span>' + opt.text + '</div>';
+            });
+            optionsHtml += '</div></div>';
+            
+            let questionsHtml = '';
+            readingPart4A.forEach(function(q) {
+                let checkboxes = '';
+                readingPart4A_Options.forEach(function(opt) {
+                    checkboxes += '<label class="compact-checkbox" onclick="toggleReadingCheckbox(this,' + q.id + ')"><input type="checkbox" name="read-q' + q.id + '" value="' + opt.letter + '"><span>' + opt.letter + '</span></label>';
+                });
+                questionsHtml += '<div class="part-question-card" id="read-card' + q.id + '">' +
+                    '<div class="question-header">' +
+                    '<div class="question-number-badge">' + q.id + '</div>' +
+                    '</div>' +
+                    '<div class="sentence-text">' + q.sentence + '</div>' +
+                    '<div class="answer-title">Pilih respons yang sesuai:</div>' +
+                    '<div class="compact-checkboxes">' + checkboxes + '</div>' +
+                    '<div class="feedback" id="read-fb' + q.id + '"></div>' +
+                    '</div>';
+            });
+            
+            container.innerHTML = optionsHtml + questionsHtml;
+        }
+
+        function generateReadingPart4B() {
+            const container = document.getElementById('reading-part4b');
+            if (!container) return;
+            
+            let optionsHtml = '<div class="options-box">' +
+                '<div class="options-title">📋 Pilihan Jawaban (A-E):</div>' +
+                '<div class="options-list">';
+            readingPart4B_Options.forEach(function(opt) {
+                optionsHtml += '<div class="option-item"><span class="option-letter">' + opt.letter + '</span>' + opt.text + '</div>';
+            });
+            optionsHtml += '</div></div>';
+            
+            let questionsHtml = '';
+            readingPart4B.forEach(function(q) {
+                let checkboxes = '';
+                readingPart4B_Options.forEach(function(opt) {
+                    checkboxes += '<label class="compact-checkbox" onclick="toggleReadingCheckbox(this,' + q.id + ')"><input type="checkbox" name="read-q' + q.id + '" value="' + opt.letter + '"><span>' + opt.letter + '</span></label>';
+                });
+                questionsHtml += '<div class="part-question-card" id="read-card' + q.id + '">' +
+                    '<div class="question-header">' +
+                    '<div class="question-number-badge">' + q.id + '</div>' +
+                    '</div>' +
+                    '<div class="sentence-text">' + q.sentence + '</div>' +
+                    '<div class="answer-title">Pilih respons yang sesuai:</div>' +
+                    '<div class="compact-checkboxes">' + checkboxes + '</div>' +
+                    '<div class="feedback" id="read-fb' + q.id + '"></div>' +
+                    '</div>';
+            });
+            
+            container.innerHTML = optionsHtml + questionsHtml;
+        }
+
+        function toggleReadingCheckbox(label, qNum) {
+            if (readingSubmitted) return;
+            document.querySelectorAll('input[name="read-q' + qNum + '"]').forEach(function(cb) {
+                cb.checked = false;
+                cb.parentElement.classList.remove('selected');
+            });
+            label.querySelector('input').checked = true;
+            label.classList.add('selected');
+            updateReadingProgress();
+        }
+
+        function updateReadingProgress() {
+            let answered = 0;
+            for (let i = 36; i <= 60; i++) {
+                if (document.querySelector('input[name="read-q' + i + '"]:checked')) answered++;
+            }
+            document.getElementById('readingAnswered').textContent = answered;
+            const ind = document.getElementById('readingProgress');
+            if (answered === 25) {
+                ind.innerHTML = '✅ Semua soal reading sudah dijawab!';
+                ind.style.background = '#d4edda';
+                ind.style.color = '#155724';
+                document.getElementById('readingSubmitBtn').disabled = false;
+            } else {
+                ind.innerHTML = '📝 ' + answered + '/25 soal sudah dijawab.';
+                ind.style.background = '#e7f3ff';
+                ind.style.color = '#667eea';
+                document.getElementById('readingSubmitBtn').disabled = (answered === 0);
+            }
+        }
+
+        function submitReading() {
+            if (readingSubmitted) return;
+            
+            let unanswered = [];
+            for (let i = 36; i <= 60; i++) {
+                if (!document.querySelector('input[name="read-q' + i + '"]:checked')) unanswered.push(i);
+            }
+            if (unanswered.length > 0) {
+                if (!confirm('⚠️ Masih ada ' + unanswered.length + ' soal belum dijawab. Yakin ingin submit?')) {
+                    return;
+                }
+            }
+            
+            readingSubmitted = true;
+            readingFinished = true;
+            clearInterval(timerInterval);
+            
+            let correctCount = 0;
+            const allReading = readingPart1.concat(readingPart2, readingPart3, readingPart4A, readingPart4B);
+            
+            allReading.forEach(function(q) {
+                const selected = document.querySelector('input[name="read-q' + q.id + '"]:checked');
+                const ans = selected ? selected.value : '';
+                const fb = document.getElementById('read-fb' + q.id);
+                const card = document.getElementById('read-card' + q.id);
+                
+                document.querySelectorAll('input[name="read-q' + q.id + '"]').forEach(function(input) { 
+                    input.disabled = true; 
+                });
+                
+                if (ans === q.correct) {
+                    correctCount++;
+                    if (fb) {
+                        fb.className = 'feedback correct';
+                        fb.innerHTML = '<strong>✅ BENAR!</strong>';
+                    }
+                    if (card) card.classList.add('answered-correct');
+                } else {
+                    if (fb) {
+                        fb.className = 'feedback incorrect';
+                        fb.innerHTML = '<strong>❌ SALAH!</strong><br>Benar: <strong>' + q.correct + '</strong>';
+                    }
+                    if (card) card.classList.add('answered-incorrect');
+                }
+            });
+            
+            showReadingResult(correctCount);
+        }
+
+        function showReadingResult(correctCount) {
+            const percentage = Math.round((correctCount / 25) * 100);
+            const listeningCorrect = listeningSubmitted ? parseInt(document.querySelector('#listeningResult .stat-value')?.textContent || '0') : 0;
+            const totalCorrect = listeningCorrect + correctCount;
+            const totalQuestions = 60;
+            const totalPercentage = Math.round((totalCorrect / totalQuestions) * 100);
+            const passingGrade = 90;
+            
+            document.getElementById('readingSubmitBtn').style.display = 'none';
+            document.getElementById('readingProgress').style.display = 'none';
+            
+            let msg = percentage === 100 ? 'Luar Biasa! 🌟' : percentage >= 80 ? 'Hebat! 👏' : percentage >= 60 ? 'Bagus! 💪' : 'Terus berlatih! 📚';
+            
+            let passHtml = '';
+            if (totalPercentage >= passingGrade) {
+                passHtml = '<div class="pass-status pass">✅ LULUS (Nilai: ' + totalPercentage + '% ≥ ' + passingGrade + '%)</div>';
+            } else {
+                passHtml = '<div class="pass-status fail">❌ BELUM LULUS (Nilai: ' + totalPercentage + '% < ' + passingGrade + '%)</div>';
+            }
+            
+            document.getElementById('readingResult').innerHTML = 
+                '<div class="result-report-icon">🎉</div>' +
+                '<div class="result-report-title">Hasil Reading</div>' +
+                '<div class="result-stats">' +
+                '<div class="stat-item"><div class="stat-value">' + correctCount + '</div><div class="stat-label">Benar</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + (25-correctCount) + '</div><div class="stat-label">Salah</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + percentage + '%</div><div class="stat-label">Nilai</div></div>' +
+                '</div>' +
+                passHtml +
+                '<div class="result-message">' + msg + '</div>' +
+                '<button class="restart-btn" onclick="location.reload()">🔄 Ulangi Test</button>';
+            document.getElementById('readingResult').classList.add('show');
+            
+            // Show final summary
+            setTimeout(function() {
+                alert('📊 HASIL AKHIR:\n\nListening: ' + listeningCorrect + '/35\nReading: ' + correctCount + '/25\nTotal: ' + totalCorrect + '/60 (' + totalPercentage + '%)\n\nNilai Kelulusan: ' + passingGrade + '%\n' + (totalPercentage >= passingGrade ? '✅ LULUS' : '❌ BELUM LULUS'));
+            }, 500);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            initializeListening();
+            initializeReading();
+            startTimer();
+        };
+
+        window.onbeforeunload = function() {
+            if ('speechSynthesis' in window) speechSynthesis.cancel();
+            if (timerInterval) clearInterval(timerInterval);
+        };
+    </script>
+</body>
+</html>
